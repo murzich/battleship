@@ -1,0 +1,39 @@
+body {
+    font-family: sans-serif;
+}
+.field {
+    display: grid;
+    grid-template-areas: ". letters"
+                        "numbers battlefield";
+    grid-template-rows: 25px auto;
+    grid-template-columns: 25px auto;
+}
+.letters {
+    grid-area: letters;
+    display: grid;
+    grid-template: 25px / repeat(10, 25px);
+}
+.numbers {
+    grid-area: numbers;
+    display: grid;
+    grid-template: repeat(10, 25px) / 25px;
+}
+.battlefield {
+    width: fit-content;
+    grid-area: battlefield;
+    display: grid;
+    grid: repeat(10, 25px) / repeat(10, 25px);
+    border: thin solid black;
+}
+.battlefield__cell {
+    box-sizing: border-box;
+    border: thin dashed lightgray;
+}
+
+.control {
+    padding: 10px;
+}
+.control__button {
+    width: 50px;
+    height: 20px;
+}
