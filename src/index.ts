@@ -1,9 +1,17 @@
 import './style.css';
 import createBattlefieldGrid from "./ts/gridDOM";
 import Grid from "./ts/grid";
+import Ship from "./ts/ship";
+import addShipByButtonListener from "./ts/service-placer";
 
-createBattlefieldGrid();
+const helpMessage: HTMLElement = document.querySelector('.help-message');
+const controlButtons: HTMLElement = document.querySelector('.control');
+const battlefield: HTMLElement = document.querySelector('.battlefield');
+const battleGrid: Grid = new Grid(10, 10);
+const fleet: Ship[] = [];
 
-let battleGrid: Grid = new Grid(10, 10);
+helpMessage.innerText = 'Choose ship!';
+battlefield.innerHTML = createBattlefieldGrid('battlefield').innerHTML;
 
-console.log(battleGrid);
+addShipByButtonListener(controlButtons, battleGrid, battlefield, fleet, helpMessage);
+

@@ -1,16 +1,18 @@
 export default class Vector {
-    x: number;
-    y: number;
-    constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
-    };
-    get cross(): object[] {
-        return [
-            new Vector(this.x + 1, this.y),
-            new Vector(this.x - 1, this.y),
-            new Vector(this.x, this.y + 1),
-            new Vector(this.x, this.y - 1)
-        ]
+    constructor(public x: number, public y: number) {};
+
+    public getFromDirection(angle: number): Vector {
+        switch (angle) {
+            case 0:
+                return new Vector(this.x + 1, this.y);
+            case 90:
+                return new Vector(this.x, this.y + 1);
+            case 180:
+                return new Vector(this. x - 1, this.y);
+            case 270:
+                return new Vector(this.x, this.y - 1);
+            default:
+                throw new Error('Vector.getFromDirection: Wrong angle.')
+        }
     }
 }

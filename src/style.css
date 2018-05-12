@@ -1,5 +1,17 @@
+* {
+    box-sizing: border-box;
+}
 body {
     font-family: sans-serif;
+}
+main {
+    display: flex;
+
+}
+@media all and (max-width: 600px) {
+    main {
+        flex-direction: column;
+    }
 }
 .field {
     display: grid;
@@ -7,6 +19,8 @@ body {
                         "numbers battlefield";
     grid-template-rows: 25px auto;
     grid-template-columns: 25px auto;
+    width: 275px;
+    width: fit-content;
 }
 .letters {
     grid-area: letters;
@@ -19,7 +33,6 @@ body {
     grid-template: repeat(10, 25px) / 25px;
 }
 .battlefield {
-    width: fit-content;
     grid-area: battlefield;
     display: grid;
     grid: repeat(10, 25px) / repeat(10, 25px);
@@ -31,9 +44,15 @@ body {
 }
 
 .control {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
 }
 .control__button {
-    width: 50px;
-    height: 20px;
+    /*width: 50px;*/
+    /*height: 20px;*/
+}
+
+._ship {
+    background: #000;
 }

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Battleship</title>
+</head>
+<body>
+<h1>Battleship field</h1>
+<main>
+    <div class="field">
+        <div class="letters">
+            <div class="letter">A</div>
+            <div class="letter">B</div>
+            <div class="letter">C</div>
+            <div class="letter">D</div>
+            <div class="letter">E</div>
+            <div class="letter">F</div>
+            <div class="letter">G</div>
+            <div class="letter">H</div>
+            <div class="letter">I</div>
+            <div class="letter">J</div>
+        </div>
+        <div class="numbers">
+            <div class="number">1</div>
+            <div class="number">2</div>
+            <div class="number">3</div>
+            <div class="number">4</div>
+            <div class="number">5</div>
+            <div class="number">6</div>
+            <div class="number">7</div>
+            <div class="number">8</div>
+            <div class="number">9</div>
+            <div class="number">10</div>
+        </div>
+        <div class="battlefield"></div>
+    </div>
+    <aside class="control">
+        <button class="control__button" data-decks="4">Add ship with 4 decks &block;&block;&block;&block;</button>
+        <button class="control__button" data-decks="3">Add ship with 3 decks &block;&block;&block;</button>
+        <button class="control__button" data-decks="2">Add ship with 2 decks &block;&block;</button>
+        <button class="control__button" data-decks="1">Add ship with 1 deck &block;</button>
+        <hr>
+        <button class="control__button" data-decks="reset">Reset</button>
+    </aside>
+</main>
+<p class="help-message"></p>
+<script src="bundle.js"></script>
+</body>
+</html>
