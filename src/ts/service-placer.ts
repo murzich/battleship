@@ -23,6 +23,15 @@ export default function addShipByButtonListener(
         helpMessage.innerText = 'Choose ship!';
     }
 
+    function getRotation(): number {
+        const radios = document.getElementsByName('rotation') as NodeListOf<HTMLInputElement>;
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                return parseInt(radios[i].value);
+            }
+        }
+    }
+
 // TODO: Refactor with {Promise}
     function addShip(e: Event): void {
         const target: HTMLElement = e.target as HTMLElement;
@@ -47,16 +56,16 @@ export default function addShipByButtonListener(
 
             switch (decks) {
                 case '4':
-                    fleet.push(new FourDecker(0, battleGrid.getVector(index), 0));
+                    fleet.push(new FourDecker(0, battleGrid.getVector(index), getRotation()));
                     break;
                 case '3':
-                    fleet.push(new ThreeDecker(1, battleGrid.getVector(index), 90));
+                    fleet.push(new ThreeDecker(1, battleGrid.getVector(index), getRotation()));
                     break;
                 case '2':
-                    fleet.push(new TwoDecker(2, battleGrid.getVector(index), 180));
+                    fleet.push(new TwoDecker(2, battleGrid.getVector(index), getRotation()));
                     break;
                 case '1':
-                    fleet.push(new SingleDecker(3, battleGrid.getVector(index), 0));
+                    fleet.push(new SingleDecker(3, battleGrid.getVector(index), getRotation()));
                     break;
                 default:
                     helpMessage.innerText = 'Something went wrong!';
