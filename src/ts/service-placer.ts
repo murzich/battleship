@@ -20,7 +20,9 @@ export default function addShipByButtonListener(
         fleet.length = 0;
         battleGrid.resetSpace();
         battlefield.innerHTML = createBattlefieldGrid('battlefield').innerHTML;
-        helpMessage.innerText = 'Choose ship!';
+        [].forEach.call(controlButtons.querySelectorAll('[disabled]'),
+            (inputElement: HTMLInputElement) => {inputElement.disabled = false});
+        helpMessage.innerText = 'Field reset. Choose ship by pressing buttons.';
     }
 
     function getRotation(): number {
@@ -31,6 +33,31 @@ export default function addShipByButtonListener(
             }
         }
     }
+
+    function getCountOfShipByClass(classOfShip: Function, fleet: Ship[]): number {
+        let count: number = 0;
+        for (let i = 0, length = fleet.length; i < length; i++) {
+            if (fleet[i] instanceof classOfShip) count++;
+        }
+        return count;
+    }
+    function getCountOfShip(ship: Ship, fleet: Ship[]): number {
+        let count: number = 0;
+        for (let i = 0, length = fleet.length; i < length; i++) {
+            if (fleet[i].size === ship.size) count++;
+        }
+        return count;
+    }
+
+    function disableButtons(lastShipInFleet: Ship, fleet: Ship[]): void {
+        if (lastShipInFleet.amount <= getCountOfShip(lastShipInFleet, fleet)) {
+            console.log('There aren\'t more this shit!');
+            (document.querySelector(`button[data-decks="${lastShipInFleet.size}"`) as HTMLInputElement)
+                .disabled = true;
+            helpMessage.innerText = `You've placed all available ${lastShipInFleet.size}-decker ships`;
+        }
+    }
+
 
 // TODO: Refactor with {Promise}
     function addShip(e: Event): void {
@@ -52,6 +79,7 @@ export default function addShipByButtonListener(
             if (!cell.classList.contains('battlefield__cell')) return;
             // HTMLCollection 'children' doesn't have '.indexOf()' method
             let index: number = [].indexOf.call(cell.parentElement.children, cell);
+            let lastShipInFleet: Ship;
             helpMessage.innerText = `You've chosen ${index} element as an anchor`;
 
             switch (decks) {
@@ -70,7 +98,9 @@ export default function addShipByButtonListener(
                 default:
                     helpMessage.innerText = 'Something went wrong!';
             }
-            battleGrid.placeShip(fleet[fleet.length - 1]);
+            lastShipInFleet = fleet[fleet.length - 1];
+            battleGrid.placeShip(lastShipInFleet);
+            disableButtons(lastShipInFleet, fleet);
             render(battlefield, battleGrid);
         }
     }
