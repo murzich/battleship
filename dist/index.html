@@ -37,14 +37,23 @@
         </div>
         <div class="battlefield"></div>
     </div>
-    <aside class="control">
-        <button class="control__button" data-decks="4">Add ship with 4 decks &block;&block;&block;&block;</button>
-        <button class="control__button" data-decks="3">Add ship with 3 decks &block;&block;&block;</button>
-        <button class="control__button" data-decks="2">Add ship with 2 decks &block;&block;</button>
-        <button class="control__button" data-decks="1">Add ship with 1 deck &block;</button>
+    <form class="control">
+        <button type="button" class="control__button" data-decks="4">Add ship with 4 decks &block;&block;&block;&block;</button>
+        <button type="button" class="control__button" data-decks="3">Add ship with 3 decks &block;&block;&block;</button>
+        <button type="button" class="control__button" data-decks="2">Add ship with 2 decks &block;&block;</button>
+        <button type="button" class="control__button" data-decks="1">Add ship with 1 deck &block;</button>
+        <fieldset id="rotation">
+            <legend>Rotation</legend>
+            <label class="control__label">
+                <input type="radio" name="rotation" class="control__radio" id="horiz" value="0" checked> horizontally
+            </label>
+            <label class="control__label">
+                <input type="radio" name="rotation" class="control__radio" value="90" id="vert"> vertically
+            </label>
+        </fieldset>
         <hr>
-        <button class="control__button" data-decks="reset">Reset</button>
-    </aside>
+        <button type="button" class="control__button" data-decks="reset">Reset</button>
+    </form>
 </main>
 <p class="help-message"></p>
 <script src="bundle.js"></script>
