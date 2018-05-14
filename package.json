@@ -1,11 +1,11 @@
 {
   "name": "battleship",
-  "version": "0.0.1",
+  "version": "0.1.10",
   "description": "The Battleship game",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
+    "build": "webpack --config webpack.prod.config.js",
     "start": "webpack-dev-server",
     "deploy": "gh-pages -d dist"
   },
