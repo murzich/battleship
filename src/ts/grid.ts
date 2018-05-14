@@ -39,7 +39,12 @@ export default class Grid {
     }
     // TODO: use for checking ability to place Ship on field;
     isAbleToPlace(shipPosition: Vector[]): boolean {
-        return shipPosition.every(vector => this.isInside(vector));
+        return shipPosition.every(vector => {
+            let value: any = this.getValue(vector);
+            return this.isInside(vector)
+                    && !(value instanceof Ship)
+                    && !(value instanceof Gap);
+        });
     }
     placeShip(ship: Ship): void {
         ship.position.forEach(vector => {

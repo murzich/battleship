@@ -51,10 +51,20 @@ export default function addShipByButtonListener(
 
     function disableButtons(lastShipInFleet: Ship, fleet: Ship[]): void {
         if (lastShipInFleet.amount <= getCountOfShip(lastShipInFleet, fleet)) {
-            console.log('There aren\'t more this shit!');
+            console.log('There aren\'t more ships with that class!');
             (document.querySelector(`button[data-decks="${lastShipInFleet.size}"`) as HTMLInputElement)
                 .disabled = true;
             helpMessage.innerText = `You've placed all available ${lastShipInFleet.size}-decker ships`;
+        }
+    }
+
+    // TODO: refactor with proper shipClass type;
+    function tryToPlaceShipOnBattleGrid(shipClass: any, index: number): void {
+        let ship = new shipClass(0, battleGrid.getVector(index), getRotation());
+        if (battleGrid.isAbleToPlace(ship.position)) {
+            fleet.push(ship);
+        } else {
+            throw 'You can\'t put this ship there. Chose ship again';
         }
     }
 
@@ -82,26 +92,31 @@ export default function addShipByButtonListener(
             let lastShipInFleet: Ship;
             helpMessage.innerText = `You've chosen ${index} element as an anchor`;
 
-            switch (decks) {
-                case '4':
-                    fleet.push(new FourDecker(0, battleGrid.getVector(index), getRotation()));
-                    break;
-                case '3':
-                    fleet.push(new ThreeDecker(1, battleGrid.getVector(index), getRotation()));
-                    break;
-                case '2':
-                    fleet.push(new TwoDecker(2, battleGrid.getVector(index), getRotation()));
-                    break;
-                case '1':
-                    fleet.push(new SingleDecker(3, battleGrid.getVector(index), getRotation()));
-                    break;
-                default:
-                    helpMessage.innerText = 'Something went wrong!';
+            try {
+                switch (decks) {
+                    case '4':
+                        tryToPlaceShipOnBattleGrid(FourDecker,index);
+                        break;
+                    case '3':
+                        tryToPlaceShipOnBattleGrid(ThreeDecker,index);
+                        break;
+                    case '2':
+                        tryToPlaceShipOnBattleGrid(TwoDecker,index);
+                        break;
+                    case '1':
+                        tryToPlaceShipOnBattleGrid(SingleDecker,index);
+                        break;
+                    default:
+                        throw 'Something went wrong!';
+                }
+                lastShipInFleet = fleet[fleet.length - 1];
+                battleGrid.placeShip(lastShipInFleet);
+                disableButtons(lastShipInFleet, fleet);
+                render(battlefield, battleGrid);
             }
-            lastShipInFleet = fleet[fleet.length - 1];
-            battleGrid.placeShip(lastShipInFleet);
-            disableButtons(lastShipInFleet, fleet);
-            render(battlefield, battleGrid);
+            catch (message) {
+                helpMessage.innerText = message;
+            }
         }
     }
 }
