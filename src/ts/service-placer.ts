@@ -61,7 +61,8 @@ export default function addShipByButtonListener(
     // TODO: refactor with proper shipClass type;
     function tryToPlaceShipOnBattleGrid(shipClass: any, index: number): void {
         let ship = new shipClass(0, battleGrid.getVector(index), getRotation());
-        if (battleGrid.isAbleToPlace(ship.position)) {
+        if (getCountOfShip(ship, fleet) < ship.amount
+            && battleGrid.isAbleToPlace(ship.position)) {
             fleet.push(ship);
         } else {
             throw 'You can\'t put this ship there. Chose ship again';
@@ -82,7 +83,7 @@ export default function addShipByButtonListener(
 
         helpMessage.innerText = `Place ship with ${decks} decks on field`;
 
-        battlefield.addEventListener('click', placeShipOnField, {once: true});
+        battlefield.addEventListener('click', placeShipOnField, {once: false});
 
         function placeShipOnField(e: Event): void {
             const cell: HTMLElement = e.target as HTMLElement;
@@ -113,6 +114,7 @@ export default function addShipByButtonListener(
                 battleGrid.placeShip(lastShipInFleet);
                 disableButtons(lastShipInFleet, fleet);
                 render(battlefield, battleGrid);
+                this.removeEventListener('click', placeShipOnField, false);
             }
             catch (message) {
                 helpMessage.innerText = message;
