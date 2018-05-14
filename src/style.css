@@ -56,3 +56,18 @@ main {
 ._ship {
     background: #000;
 }
+._gap {
+    position: relative;
+}
+._gap::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    content: "\B7";
+    font-size: 25px;
+    color: black;
+    line-height: 25px;
+    text-align: center;
+}

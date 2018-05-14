@@ -15,4 +15,14 @@ export default class Vector {
                 throw new Error('Vector.getFromDirection: Wrong angle.')
         }
     }
+    get nearVectors(): Vector[] {
+        let array: Vector[] = [];
+        for (let i = 0, dx = -1, dy; dx < 2; i++) {
+            dy = i % 3 - 1;
+            if (dx === 0 && dy === 0) continue;
+            array.push(new Vector(this.x + dx, this.y + dy));
+            if (dy === 1) dx++;
+        }
+        return array;
+    }
 }

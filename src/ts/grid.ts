@@ -1,10 +1,11 @@
 import Vector from './vector';
 import Ship from "./ship";
+import Gap from "./gap";
 
 export default class Grid {
     width: number;
     height: number;
-    space: Ship[];
+    space: (Ship | Gap)[];
     constructor(width: number = 10, height: number = 10) {
         this.width = width;
         this.height = height;
@@ -15,10 +16,13 @@ export default class Grid {
         return vector.x >= 0 && vector.x < this.width &&
                vector.y >= 0 && vector.y < this.height;
     }
-    getValue(vector: Vector): Ship {
+    removeOutsideVectors(vectorArray: Vector[]): Vector[] {
+        return vectorArray.filter(vector => this.isInside(vector));
+    }
+    getValue(vector: Vector): Ship | Gap {
         return this.space[vector.x + this.width * vector.y];
     }
-    setValue(vector: Vector, value: Ship ) {
+    setValue(vector: Vector, value: Ship | Gap ) {
         this.space[vector.x + this.width * vector.y] = value;
     }
     getVector(index: number) : Vector {
@@ -37,10 +41,23 @@ export default class Grid {
     isAbleToPlace(shipPosition: Vector[]): boolean {
         return shipPosition.every(vector => this.isInside(vector));
     }
-    placeShip(ship: Ship) {
+    placeShip(ship: Ship): void {
         ship.position.forEach(vector => {
             this.setValue(vector, ship);
-        })
+            this.addGap(vector, ship);
+        });
+    }
+    addGap(vector: Vector, ship: Ship): void {
+        this.removeOutsideVectors(vector.nearVectors)
+            .forEach(vector => {
+                let currentValue = this.getValue(vector);
+                if (currentValue instanceof Ship) return;
+                if (currentValue === undefined) {
+                    this.setValue(vector, new Gap(ship));
+                } else {
+                    currentValue.addParent(ship);
+                }
+            })
     }
     resetSpace = (): void => {
         this.space.splice(0);
