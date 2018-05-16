@@ -1,8 +1,9 @@
 import './style.css';
-import createBattlefieldGrid from "./ts/gridDOM";
 import Grid from "./ts/grid";
-import Ship from "./ts/ship";
+import createBattlefieldGrid from "./ts/gridDOM";
+import random from "./ts/random-field";
 import addShipByButtonListener from "./ts/service-placer";
+import Ship from "./ts/ship";
 
 const helpMessage: HTMLElement = document.querySelector('.help-message');
 const controlButtons: HTMLElement = document.querySelector('.control');
@@ -15,3 +16,4 @@ battlefield.innerHTML = createBattlefieldGrid('battlefield').innerHTML;
 
 addShipByButtonListener(controlButtons, battleGrid, battlefield, fleet, helpMessage);
 
+random(controlButtons, battleGrid, battlefield, fleet, helpMessage);

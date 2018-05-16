@@ -34,13 +34,6 @@ export default function addShipByButtonListener(
         }
     }
 
-    function getCountOfShipByClass(classOfShip: Function, fleet: Ship[]): number {
-        let count: number = 0;
-        for (let i = 0, length = fleet.length; i < length; i++) {
-            if (fleet[i] instanceof classOfShip) count++;
-        }
-        return count;
-    }
     function getCountOfShip(ship: Ship, fleet: Ship[]): number {
         let count: number = 0;
         for (let i = 0, length = fleet.length; i < length; i++) {
